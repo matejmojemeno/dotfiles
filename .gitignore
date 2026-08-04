@@ -10,6 +10,10 @@
 !/tmux/
 !/zsh/
 !/nvim/
+!/karabiner/
+
+# Karabiner rewrites these on every config change
+karabiner/automatic_backups/
 
 # Secrets, sourced by zsh/.zshrc
 zsh/.secrets.zsh

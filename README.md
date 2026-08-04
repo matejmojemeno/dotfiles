@@ -1,6 +1,7 @@
 # dotfiles
 
-Selected `~/.config` directories: `ghostty`, `tmux`, `zsh`, `nvim` (submodule).
+Selected `~/.config` directories: `ghostty`, `tmux`, `zsh`, `karabiner`,
+`nvim` (submodule).
 
 `.gitignore` denies everything by default and un-ignores only those paths —
 `~/.config` also holds credentials (`gcloud`, `gh`, `github-copilot`), which
@@ -39,6 +40,27 @@ echo 'export ZDOTDIR=$HOME/.config/zsh' >> ~/.zshenv
 ```
 
 Plugins are managed by zinit, which self-installs on first shell start.
+
+## Karabiner bootstrap
+
+`karabiner/karabiner.json` is self-contained (caps lock → ctrl/esc, fn+f6 →
+f16), but the file alone does nothing until the app is installed and granted
+permissions:
+
+```bash
+brew install --cask karabiner-elements
+```
+
+1. Launch it once and grant **Input Monitoring** and **Accessibility** to
+   `karabiner_grabber` and `karabiner_observer` (System Settings → Privacy &
+   Security), and approve the **driver extension** under Login Items &
+   Extensions → Driver Extensions. macOS requires a reboot for the driver.
+2. **Quit Karabiner-Elements**, then check out `karabiner/karabiner.json`
+   (a running Karabiner rewrites the file and would clobber it).
+3. Relaunch. Verify the profile shows as "Default profile" and selected.
+
+If the other machine has an ISO/JIS keyboard, change
+`virtual_hid_keyboard.keyboard_type_v2` from `ansi`.
 
 ## Machine-local overrides
 
