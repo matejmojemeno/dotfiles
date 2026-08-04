@@ -1,0 +1,26 @@
+# Deny by default: ~/.config holds credentials (gcloud, gh, github-copilot),
+# so nothing is tracked unless it is explicitly un-ignored below.
+/*
+
+!/.gitignore
+!/.gitmodules
+!/README.md
+
+!/ghostty/
+!/tmux/
+!/zsh/
+!/nvim/
+
+# Secrets, sourced by zsh/.zshrc
+zsh/.secrets.zsh
+
+# zsh runtime state
+zsh/.zcompdump*
+zsh/.zcompcache/
+zsh/.zsh_sessions/
+zsh/.zsh_history
+zsh/.fzf.zsh
+
+# Machine-local overrides, included by the committed configs
+*.local
+tmux/tmux.local.conf

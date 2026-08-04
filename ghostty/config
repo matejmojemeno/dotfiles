@@ -1,0 +1,46 @@
+# ~/.config/ghostty/config
+# Ported from ~/.config/wezterm/wezterm.lua
+
+# ── Appearance ──────────────────────────────────────────────────────────────
+theme = TokyoNight Moon
+font-size = 18
+# Ghostty ships with JetBrains Mono as its built-in default, so no font-family
+# line is needed (your old macOS-location config set "JetBrainsMono").
+# font-family = JetBrains Mono
+
+window-padding-x = 0
+window-padding-y = 0
+
+# wezterm's window_decorations = "RESIZE" (no titlebar, still resizable).
+# Alternative: "tabs" keeps a titlebar but embeds the tab bar in it.
+macos-titlebar-style = hidden
+
+# ── Window / startup ────────────────────────────────────────────────────────
+maximize = true
+macos-non-native-fullscreen = true
+window-save-state = never
+
+# ── Functionality ───────────────────────────────────────────────────────────
+confirm-close-surface = false
+quit-after-last-window-closed = false
+
+# Required for alt+<key> to reach tmux/nvim (splits, smart-splits <A-hjkl>).
+macos-option-as-alt = true
+
+# ── tmux as the pane layer ──────────────────────────────────────────────────
+# One fresh tmux session per Ghostty window; panes/splits live in tmux, which
+# is what makes seamless ctrl+hjkl navigation with neovim possible.
+# See ~/.config/tmux/tmux.conf.
+command = /opt/homebrew/bin/tmux new-session
+
+# ── Keybindings ─────────────────────────────────────────────────────────────
+# All Ghostty defaults. Panes are tmux's job now, so Ghostty's own split
+# bindings are unbound to avoid nesting splits inside splits by accident.
+keybind = super+d=unbind
+keybind = super+shift+d=unbind
+
+# ── Machine-local overrides ─────────────────────────────────────────────────
+# Optional (the ? prefix); loaded last, so it wins. Gitignored. Put anything
+# machine-specific here — font-size, or the tmux path on Intel/Linux:
+#   command = /usr/local/bin/tmux new-session
+config-file = ?config.local
