@@ -11,6 +11,7 @@
 !/zsh/
 !/nvim/
 !/karabiner/
+!/claude/
 
 # Karabiner rewrites these on every config change
 karabiner/automatic_backups/

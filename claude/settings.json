@@ -1,0 +1,11 @@
+{
+  "model": "opus[1m]",
+  "effortLevel": "medium",
+  "theme": "auto",
+  "showClearContextOnPlanAccept": true,
+  "statusLine": {
+    "command": "~/.claude/statusline.sh",
+    "padding": 0,
+    "type": "command"
+  }
+}
