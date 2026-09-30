@@ -30,14 +30,29 @@ macos-option-as-alt = true
 # ── tmux as the pane layer ──────────────────────────────────────────────────
 # One fresh tmux session per Ghostty window; panes/splits live in tmux, which
 # is what makes seamless ctrl+hjkl navigation with neovim possible.
-# See ~/.config/tmux/tmux.conf.
-command = /opt/homebrew/bin/tmux new-session
+# The wrapper parks the initial shell in window slot 2, leaving slot 1 for the
+# alt+1 = neovim workspace. See ~/.config/tmux/tmux.conf + goto-window.sh.
+command = shell:$HOME/.config/tmux/ghostty-session.sh
 
 # ── Keybindings ─────────────────────────────────────────────────────────────
 # All Ghostty defaults. Panes are tmux's job now, so Ghostty's own split
 # bindings are unbound to avoid nesting splits inside splits by accident.
 keybind = super+d=unbind
 keybind = super+shift+d=unbind
+
+# Shift+Enter → ESC+CR. Terminals send a plain CR for shift+enter by default,
+# which Claude Code (and most REPLs) read as "submit". ESC+CR is the sequence
+# Claude Code's /terminal-setup installs elsewhere to mean "insert newline".
+keybind = shift+enter=text:\x1b\r
+
+# cmd+left/right = start/end of line, matching macOS. Ghostty has no default
+# for these (cmd+backspace already sends \x15, which neovim and readline both
+# read as delete-to-line-start), so send Home/End, which zsh, fish, neovim and
+# telescope's prompt all handle natively. option+arrows/backspace need no
+# ghostty binding: macos-option-as-alt = true above turns them into <M-...>,
+# handled in ~/.config/nvim/lua/remap.lua.
+keybind = super+left=text:\x1b[H
+keybind = super+right=text:\x1b[F
 
 # ── Machine-local overrides ─────────────────────────────────────────────────
 # Optional (the ? prefix); loaded last, so it wins. Gitignored. Put anything
