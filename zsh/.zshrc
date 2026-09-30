@@ -1,7 +1,7 @@
 # Exports
-export PATH="$PATH:/Users/matej/.juliaup/bin/"
+export PATH="$PATH:$HOME/.juliaup/bin/"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-export EDITOR="/opt/homebrew/bin/nvim"
+export EDITOR="nvim"
 export CC="/opt/homebrew/opt/llvm/bin/clang"
 export CXX="/opt/homebrew/opt/llvm/bin/clang++"
 
@@ -26,19 +26,14 @@ eval "$(zoxide init zsh)"
 source ~/.config/zsh/aliases.zsh
 
 
-# Deleting and moving by whole words
-# HACK: Ctrl+Backspace sends Ctrl+b in Wezterm so it can work in neovim
-if [[ $TERM_PROGRAM == "WezTerm" ]]; then
-    bindkey "^B" backward-delete-word
-else
-    bindkey '^[^?' backward-kill-word
-fi
-local WORDCHARS=${WORDCHARS//[^a-zA-Z]/}
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-
-bindkey "^k" history-search-backward
-bindkey "^j" history-search-forward
+# macOS-native line editing. ghostty sends ^U for cmd+backspace and ESC+DEL for
+# option+backspace, both already bound; cmd+left/right are bound in
+# ~/.config/ghostty/config to send Home/End, which zsh's emacs keymap does not
+# recognise in this escape form, hence the two bindkeys.
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[1;3D' backward-word   # option+left
+bindkey '^[[1;3C' forward-word    # option+right
 
 
 # History
@@ -98,7 +93,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # make thefuck work
-eval $(thefuck --alias)
+command -v thefuck >/dev/null && eval $(thefuck --alias)
 
 
 # activate python venv
@@ -132,7 +127,10 @@ alias venv='find_and_activate_venv'
 # source <(carapace _carapace)
 #
 
-source "/Users/matej/.deno/env"
+[ -f ~/.deno/env ] && source ~/.deno/env
 
-# API keys etc. live outside the dotfiles repo (see ~/.config/.gitignore)
+export PATH="$HOME/.local/bin:$PATH"
+
+# API keys and machine-local setup (e.g. work env) live outside the dotfiles
+# repo (see ~/.config/.gitignore)
 [ -f ~/.config/zsh/.secrets.zsh ] && source ~/.config/zsh/.secrets.zsh
