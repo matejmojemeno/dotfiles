@@ -1,7 +1,7 @@
 # dotfiles
 
 Selected `~/.config` directories: `ghostty`, `tmux`, `zsh`, `karabiner`,
-`nvim` (submodule).
+`claude`, `nvim` (submodule).
 
 `.gitignore` denies everything by default and un-ignores only those paths —
 `~/.config` also holds credentials (`gcloud`, `gh`, `github-copilot`), which
@@ -61,6 +61,22 @@ brew install --cask karabiner-elements
 
 If the other machine has an ISO/JIS keyboard, change
 `virtual_hid_keyboard.keyboard_type_v2` from `ansi`.
+
+## Claude Code bootstrap
+
+Claude Code reads its user settings from `~/.claude`, not `~/.config`, so link
+the tracked files in:
+
+```bash
+mkdir -p ~/.claude
+ln -s ~/.config/claude/settings.json ~/.claude/settings.json
+ln -s ~/.config/claude/statusline.sh ~/.claude/statusline.sh
+```
+
+The status line needs `jq`. Only shareable preferences live here — keep
+machine-specific hooks, permissions and auto-mode environment out of the
+tracked `settings.json` (use `~/.claude/settings.local.json`-style local files
+or edit `~/.claude/settings.json` directly on that machine instead of linking).
 
 ## Machine-local overrides
 
